@@ -55,6 +55,7 @@ static SharetraceBridge *shareInstance = nil;
         AppData* appData = cacheHolder.wakeUpData;
         NSDictionary* dict = [SharetraceBridge parseToResultDict:200 :@"Success" :appData.paramsData :appData.channel];
         [SharetraceBridge wakeupTraceCallback:dict];
+        cacheHolder.wakeUpData = nil;
     }
 }
 
@@ -74,8 +75,6 @@ static SharetraceBridge *shareInstance = nil;
     } else {
         cacheHolder.wakeUpData = appData;
     }
-    
-    self.wakeUpData = appData;
 }
 
 + (NSString*)dictToJSONString:(NSDictionary*) dict {
