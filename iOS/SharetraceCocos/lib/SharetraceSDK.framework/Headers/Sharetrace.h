@@ -62,10 +62,21 @@
 
 /**
 * 获取由web传递过来的动态参数（如房间号、邀请码、渠道等）和相关信息
+* 默认回调超时时长为: 10 秒
 * @param success 成功回调block，在主线程（UI线程）回调
 * @param fail 失败回调block，在主线程（UI线程）回调
 */
 + (void)getInstallTrace:(void (^ _Nullable)(AppData * _Nullable))success :(void (^ _Nullable)(NSInteger, NSString * _Nonnull))fail;
+
+/**
+* 获取由web传递过来的动态参数（如房间号、邀请码、渠道等）和相关信息，可自定义回调超时时长(单位: 毫秒(ms))
+* @param timeout 回调超时时长; 如: 设置10秒则传入 10 * 1000
+* @param success 成功回调block，在主线程（UI线程）回调
+* @param fail 失败回调block，在主线程（UI线程）回调
+*/
++ (void)getInstallTraceWithTimeout:(NSTimeInterval)timeout
+                                  success:(void (^ _Nullable)(AppData * _Nullable))success
+                                  fail:(void (^ _Nullable)(NSInteger, NSString * _Nonnull))fail;
 
 /**
  * 处理 URI Schemes 逻辑
@@ -89,10 +100,19 @@
 
 /**
  * 设置目标服务器的domain, 仅供私有化部署用户使用
- * 注: 需要在init之前调用才能生效！
+ * 注:
+ * 方法一: 如在代码中设置, 需要在init之前调用才能生效！
+ * 方法二: 调用该方法前，需在Info.plist文件中配置键值对
+ * <key>com.sharetrace.SERVER_DOMAIN</key>
  * @param domain 目标服务器的domain, 如: https://api.sharetrace.com
  */
 + (void)setServerDomain:(NSString * _Nonnull)domain;
+
+/**
+ * 判断是否首次请求
+ * @return BOOL 是否首次请求
+ */
++ (BOOL)isFirstOpen;
 
 @end
 
